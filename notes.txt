@@ -1,0 +1,26 @@
+I've taken notes in my notebook, trying to understand the properties of the coordinates system.
+
+From the example given:
+CSYS.Origin = [10.0, 5.0, 3.0]
+
+              [0.99452, 0.10453, 0] -> vector to which the X-axis is pointing
+CSYS.Matrix = [-0.10453, 0.99452, 0] -> vector to which the Y-axis is pointing
+              [0,          0,     1] -> vector to which the Z-axis is pointing
+
+[x1, y1, z1] = [10, 5, 3] needs to be transformed in [x2, y2, z2]
+- Rotated 6 degrees around Z-axis (alpha=6)
+
+alpha = angle by which rotation around Z-axis is done
+
+I've used ChatGPT to find out more details about CSYS coordinate systems and the formula for transforming from a CSYS1 system to a CSYS2 system.
+I found out the general formula is:
+
+Vector in CSYS2 = Transpose of Rotation Matrix x Vector in CSYS2
+
+                  [cos(alpha) -sin(alpha) 0]
+Rotation Matrix = [sin(alpha) cos(alpha)  0]
+                  [0             0        1]
+
+                                   [cos(alpha) sin(alpha)  0]
+Transpose of the rotation matrix = [-sin(alpha) cos(alpha) 0]
+                                   [0              0       1]
