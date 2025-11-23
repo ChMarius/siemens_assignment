@@ -1,26 +1,22 @@
-I've taken notes in my notebook, trying to understand the properties of the coordinates system.
+  So, here is a documentation of my thought process, more or less.
 
-From the example given:
-CSYS.Origin = [10.0, 5.0, 3.0]
+  I started by doing research of how to theoretically transform an CSYS1 (global) system into a CSYS2 (local) system. For that I used ChatGPT, to explain to me 
+how should I start and what should I calculate and the corresponding formulas for each step. I also used ChatGPT, to dive deeper into research about the NumPy library, too see which function of it should I use.
 
-              [0.99452, 0.10453, 0] -> vector to which the X-axis is pointing
-CSYS.Matrix = [-0.10453, 0.99452, 0] -> vector to which the Y-axis is pointing
-              [0,          0,     1] -> vector to which the Z-axis is pointing
+  By how I see things, I should take more of a methodical approach to this and design the whole program in a more modular way, with separations of concerns in mind, for clean and understandable management 
+of code, where each file is a subsystem, for easier understanding of the flowm and debugging.
 
-[x1, y1, z1] = [10, 5, 3] needs to be transformed in [x2, y2, z2]
-- Rotated 6 degrees around Z-axis (alpha=6)
+  One of the first things I should do, into implementation, is to check the orthonormality of the systems. More details about the implementation are in the ortho_functions.txt.
 
-alpha = angle by which rotation around Z-axis is done
+After that, the next step, it to convert the local point into global coordinates using the formula: p_global = O1 + R1*p1
+O1 = origin of CSYS1
+R1 = rotation matrix
+p1 = local point in CSYS1
+After getting the global point, we convert it into the CSYS2 system with the formula: p2 = R2^T*(p_global - O2)
+R2^T = transpose of the CSYS2 rotation matrix
+O2 = origin of CSYS2
+These are the two main formulas to get the desired result. The rest of the implementation is orthonormality checks, data validation and the unit test
 
-I've used ChatGPT to find out more details about CSYS coordinate systems and the formula for transforming from a CSYS1 system to a CSYS2 system.
-I found out the general formula is:
 
-Vector in CSYS2 = Transpose of Rotation Matrix x Vector in CSYS2
 
-                  [cos(alpha) -sin(alpha) 0]
-Rotation Matrix = [sin(alpha) cos(alpha)  0]
-                  [0             0        1]
-
-                                   [cos(alpha) sin(alpha)  0]
-Transpose of the rotation matrix = [-sin(alpha) cos(alpha) 0]
-                                   [0              0       1]
+  For robustness, I also implemented error handling with clear explanations and data validation.

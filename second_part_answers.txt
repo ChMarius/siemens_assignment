@@ -1,0 +1,26 @@
+- Write a small test to show that the function is working properly
+
+  The test is in Code/test_converter.py. I used a simple case, where both of the systems are identical and the expected result should be p2 = [1,2,3]. 
+  I went with a usual and methodical approach of AAA pattern (Arrange, Act, Assert).
+
+- Comment on what you could do in order to make a compiled version of the code result in a smaller executable.
+
+  The things I could do in order to make a smaller executable is, first of all, remove the NumPy library, which is an extra depedency, and instead use Python's built-in 
+mathematical functions and data types. Even though, this would make the executable smaller, it would also slow down the program, as NumPy is a library heavily optimized in C,
+so operations run much faster than using the Python's built-in functions.
+  Another thing I could is enable compiler optimization flags. For example, I could use Cython, a static compiler for Python, and by setting it up in my program, 
+I can use different optimization flags, to produce a smaller compiled executable.
+
+- Comment on what you could do in order to make it run faster.
+
+   The optimizations I could do, to make the code run faster, are more about the efficiency of my program. One of the first things I could do is precompute some values like
+the transpose of the csys2 matrix. Every time the CSYS_converter function is called with the same coordinates systems, the function computes the transpose in every call.
+An optimization would be to precompute the transpose inside the CSYS class. For one-time call of the function, this would be useless, but when calling multiple times,
+this would be a performance improvement.
+   Another improvement would be to avoid checking for orthornomalization for every function call. If the function is called again with the same systems, the whole 
+orthornomalization process is redundant. I could a implement a flag that would signal if the system is orthornomalized or not, to avoid useless verification.
+
+- Define an object that has both a location and orientation in 3d-space, and create a new function that can transform such an object from CSYS1 to CSYS2
+
+The answer to this assignment is in Code/object3d_transformation folder. The object3d_transformation also uses the csys_point_converter function from the CSYS_converter.py
+

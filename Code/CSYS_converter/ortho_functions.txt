@@ -1,0 +1,26 @@
+
+Why abs(np.linalg.norm(x_axis) - 1) < tol ??
+
+To ensure that each axis length is 1, I will compute the length of the vector with np.linalg.norm(x_axis) and then substract it by 1, to check the if the difference is bigger than the tolerated value.
+Instead of checking if its equal to 1 (norm(x_axis) == 1), we use a tolerance value, because Computers cannot represent real numbers perfectly, as numerical rounding might give: 0.9999998 or 1.0000005
+
+The same check is with abs(np.dot(x_axis, y_axis)) < tol. The multiplication should theoretically give zero, but because of rounding, we have to check with tolerant values.
+
+This advice was recommended by ChatGPT when I asked about orthonormality concepts.
+
+
+Orthogonalization:
+
+Variables:
+ux_axis - normalized version of x_axis
+y_perp_axis - component of y_axis, perpendicular to ux_axis
+uy_axis - normalized version of y_axis
+uz_axis - normalized version of z_axis
+
+For normalization of the x axis, the formula is : ux = x / ||x||
+
+For finding the perpendicular to x_axis component of y axis: y_perp = y - (y*ux)*ux
+
+For normalization of y_axis:  uy = y_perp / ||y_perp||
+
+For normalization of the uz_axis: uz = ux * uy 
